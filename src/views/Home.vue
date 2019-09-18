@@ -10,7 +10,7 @@
 
 <script>
 import Board from '@/components/Board.vue';
-import db from "@/api/firebase";
+import db from '@/api/firebase';
 
 export default {
   components: {
@@ -21,29 +21,29 @@ export default {
       boards: [{
         name: 'Backlog',
         color: 'deep-purple accent-4',
-        todos: []
+        todos: [],
       },
       {
         name: 'Todo',
         color: 'deep-purple accent-4',
-        todos: []
+        todos: [],
       },
       {
         name: 'Onprogress',
         color: 'deep-purple accent-4',
-        todos: []
+        todos: [],
       },
       {
         name: 'Done',
         color: 'deep-purple accent-4',
-        todos: []
+        todos: [],
       }],
     };
   },
   created() {
-    db.collection("Card").onSnapshot(snapshot => {
+    db.collection('Card').onSnapshot((snapshot) => {
       console.log(snapshot);
     });
-  }
+  },
 };
 </script>

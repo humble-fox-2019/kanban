@@ -9,9 +9,9 @@
     </v-toolbar>
 
     <v-card-text>
-      
+
       <Card />
-      
+
     </v-card-text>
   </v-card>
 </template>
@@ -23,8 +23,8 @@ import Card from '@/components/Card.vue';
 export default {
   props: ['boardConfig'],
   components: {
-    Card
-  }
+    Card,
+  },
 };
 </script>
 
