@@ -2,21 +2,29 @@
   <v-card class="mx-auto" max-width="400" >
     <v-toolbar
       flat
-      :color="color"
+      :color="boardConfig.color"
       dark
     >
-      <v-toolbar-title>{{name}}</v-toolbar-title>
+      <v-toolbar-title>{{boardConfig.name}}</v-toolbar-title>
     </v-toolbar>
 
     <v-card-text>
-      <h2 class="title mb-2">Card Here</h2>
+      
+      <Card />
+      
     </v-card-text>
   </v-card>
 </template>
 
 <script>
+
+import Card from '@/components/Card.vue';
+
 export default {
-  props: ['color', 'name'],
+  props: ['boardConfig'],
+  components: {
+    Card
+  }
 };
 </script>
 
