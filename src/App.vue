@@ -1,93 +1,164 @@
 <template>
   <div id="app">
     <Navbar style="margin-bottom: 20px;"></Navbar>
+    
+    <div>
+      <div class="mt-3">
+        Submitted Names:
+        <div v-if="submittedNames.length === 0">--</div>
+        <ul v-else class="mb-0 pl-3">
+          <li v-for="(name, i) in submittedNames" :key="i">{{ name }}</li>
+        </ul>
+      </div>
+
+      <b-modal
+        id="modal-prevent-closing"
+        ref="modal"
+        title="Add new task"
+        @show="resetModal"
+        @hidden="resetModal"
+        @ok="handleOk"
+      >
+        <form ref="form" @submit.stop.prevent="handleSubmit">
+          <b-form-group
+            :state="titleState"
+            label="Title"
+            label-for="title-input"
+            invalid-feedback="Title is required"
+          >
+            <b-form-input
+              id="title-input"
+              v-model="task.title"
+              :state="nameState"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            :state="nameState"
+            label="Name"
+            label-for="name-input"
+            invalid-feedback="Name is required"
+          >
+            <b-form-input
+              id="name-input"
+              v-model="name"
+              :state="nameState"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            :state="nameState"
+            label="Name"
+            label-for="name-input"
+            invalid-feedback="Name is required"
+          >
+            <b-form-input
+              id="name-input"
+              v-model="name"
+              :state="nameState"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            :state="nameState"
+            label="Name"
+            label-for="name-input"
+            invalid-feedback="Name is required"
+          >
+            <b-form-input
+              id="name-input"
+              v-model="name"
+              :state="nameState"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            :state="nameState"
+            label="Name"
+            label-for="name-input"
+            invalid-feedback="Name is required"
+          >
+            <b-form-input
+              id="name-input"
+              v-model="name"
+              :state="nameState"
+              required
+            ></b-form-input>
+          </b-form-group>
+        </form>
+      </b-modal>
+    </div>
 
     <div class="container-fluid">
       <div class="row">
-
-        <div class="col-md-3" id="backlog">
-          <Category :category="'Backlog'">
-            <draggable v-model="backlog" v-bind="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
-              <transition-group type="transition" :name="'flip-list'">
-                <Task v-for="(task, i) in backlog" :key="i" :task="task"></Task>            
-              </transition-group>
-            </draggable>
-          </Category>
-        </div>
-
-        <div class="col-md-3" id="todo">
-          <Category :category="'Todo'">
-            <draggable v-model="todo" v-bind="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
-              <transition-group type="transition" :name="'flip-list'">
-                <Task v-for="(task, i) in todo" :key="i" :task="task"></Task>            
-              </transition-group>
-            </draggable>
-          </Category>
-        </div>
-
-        <div class="col-md-3" id="doing">
-          <Category :category="'doing'">
-            <draggable v-model="doing" v-bind="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
-              <transition-group type="transition" :name="'flip-list'">
-                <Task v-for="(task, i) in doing" :key="i" :task="task"></Task>            
-              </transition-group>
-            </draggable>
-          </Category>
-        </div>
-
-        <div class="col-md-3" id="done">
-          <Category :category="'done'">
-            <draggable v-model="done" v-bind="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
-              <transition-group type="transition" :name="'flip-list'">
-                <Task v-for="(task, i) in done" :key="i" :task="task"></Task>            
-              </transition-group>
-            </draggable>
-          </Category>
-        </div>
-
+        <Category>
+        </Category>
       </div>
     </div>
-
-    
   </div>
 </template>
 
 <script>
-import draggable from 'vuedraggable'
 import Navbar from './components/Navbar'
 import Category from './components/Category'
-import Task from './components/Task'
+import Modal from './components/Modal'
+import db from './apis/firebase'
+
+const tasks = db.collection('tasks')
 
 export default {
   components: {
-    draggable, Navbar, Category, Task
+    Navbar, Category, Modal
   },
   
   data() {
     return {
-      editable: true,
-      isDragging: false,
-      // categories: ['Backlog', 'Todo', 'Doing', 'Done'],
-      backlog: ['makan', 'tidur'],
-      todo: ['mandi', 'sarapan', 'ke kampus'],
-      doing: ['belajar'],
-      done: ['solat isya']
+      name: '',
+      states: {
+        titleState: null,
+        descriptionState: null,
+        pointState: null,
+        assigned_toState: null,
+        statusState: null
+      },
+      submittedNames: [],
+      task: {
+        title: '',
+        description: '',
+        point: '',
+        assigned_to: '',
+        status: ''
+      }
     }
   },
   methods: {
-    onMove(evt){
-      return (evt.draggedContext.element.name!=='apple');
-    }
-  },
-  computed: {
-    dragOptions() {
-      return {
-        animation: 1,
-        group: "description",
-        disabled: !this.editable,
-        ghostClass: "ghost"
-      };
+    checkFormValidity() {
+        const valid = this.$refs.form.checkValidity()
+        this.nameState = valid ? 'valid' : 'invalid'
+        return valid
     },
+    resetModal() {
+      this.name = ''
+      this.nameState = null
+    },
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault()
+      // Trigger submit handler
+      this.handleSubmit()
+    },
+    handleSubmit() {
+      // Exit when the form isn't valid
+      if (!this.checkFormValidity()) {
+        return
+      }
+      // Push the name to submitted names
+      this.submittedNames.push(this.name)
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$refs.modal.hide()
+      })
+    }
   }
 
 }
@@ -106,14 +177,4 @@ Navbar {
   position: fixed-top;
   margin-bottom: 20px;
 }
-
-Task {
-  
-}
-
-#box-category {
-  /* margin-left: 20px; */
-}
-
-
 </style>
