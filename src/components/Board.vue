@@ -2,15 +2,15 @@
   <v-card class="mx-auto" max-width="400" >
     <v-toolbar
       flat
-      :color="boardConfig.color"
+      :color="boardData.color"
       dark
     >
-      <v-toolbar-title>{{boardConfig.name}}</v-toolbar-title>
+      <v-toolbar-title>{{boardData.name}}</v-toolbar-title>
     </v-toolbar>
 
     <v-card-text>
 
-      <Card />
+      <Card v-for="card in boardData.cards" :key="card.id" :card-data="card" />
 
     </v-card-text>
   </v-card>
@@ -21,7 +21,7 @@
 import Card from '@/components/Card.vue';
 
 export default {
-  props: ['boardConfig'],
+  props: ['boardData'],
   components: {
     Card,
   },

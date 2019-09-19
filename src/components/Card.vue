@@ -1,15 +1,17 @@
 <template>
-  <v-card class="mx-auto" outlined>
-    <v-card-text>"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."</v-card-text>
+  <v-card class="mx-auto mt-2" outlined>
+    <v-card-text>{{cardData.title}}</v-card-text>
 
     <v-card-actions>
-
+        <v-btn text>Detail</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ['cardData'],
+};
 </script>
 
 <style>
