@@ -207,9 +207,11 @@ export default {
       }
     },
     clearForm() {
-      this.title = "";
-      this.description = "";
-      this.status = this.todoStatus[0];
+      setTimeout(() => {
+        this.title = "";
+        this.description = "";
+        this.status = this.todoStatus[0];
+      }, 500);
     },
     createTodo() {
       Todos.add({
