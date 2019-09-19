@@ -1,7 +1,7 @@
 <template>
     <div class="h-20 flex items-center" id="nav">
         <div>
-            <h1 class="font-extrabold text-2xl flex items-center"><i class="fab fa-vuejs fa-2x mr-2"></i>KAMBAN</h1>
+            <h1 class="font-extrabold text-2xl flex items-center"><i class="fab fa-vuejs fa-2x mr-2"></i>KANGBANG</h1>
         </div>
         <div class="ml-auto">
             <button 

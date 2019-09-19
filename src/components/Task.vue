@@ -1,6 +1,6 @@
 <template>
     <div class="rounded border my-8 task shadow-md">
-        <div class="font-extrabold text-base rounded-t border-b p-4 tasktitle">
+        <div class="font-extrabold text-base rounded-t border-b py-2 px-4 tasktitle">
             {{ task.title }}
         </div>
         <div class="m-4 taskdesc font-semibold">

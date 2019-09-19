@@ -59,7 +59,7 @@ import firebase from '@/apis/firebase.js'
 const { Task } = firebase
 
 export default {
-    props: ['selectedTask'],
+    props: ['selectedTask', 'loading'],
     data () {
         return {
 
@@ -70,27 +70,33 @@ export default {
             this.$emit('backToTasks')
         },
         deleteTask(id) {
+            this.backToTasks()
+
             Task.doc(id).delete()
                 .then(() => {
                     console.log('sukses dihapus tjoy');
-                    this.backToTasks()
+                    this.$toast.open('Great, you success delete one')
                 })
                 .catch(err => {
                     console.log(err)
+                    this.$toast.error('Ops!, your action is failed')
                 })
         },
         updateTask(id) {
+            this.backToTasks()
+
             Task.doc(id).update({
                 title: this.selectedTask.title,
                 description: this.selectedTask.description,
                 status: this.selectedTask.status
             })
                 .then(() => {
-                    console.log('sukses dihapus tjoy');
-                    this.backToTasks()
+                    console.log('sukses diupdate tjoy')
+                    this.$toast.open('Great, you success delete one')
                 })
                 .catch(err => {
                     console.log(err)
+                    this.$toast.error('Ops!, your action is failed')
                 })
         },
         onChange($event) {

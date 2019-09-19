@@ -3,8 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import '@/assets/css/tw-output.css'
+import VueToast from 'vue-toast-notification'
+import 'vue-toast-notification/dist/index.css'
 
 Vue.config.productionTip = false
+
+Vue.use(VueToast)
 
 new Vue({
   router,

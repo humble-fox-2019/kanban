@@ -68,6 +68,9 @@ import firebase from '@/apis/firebase.js'
 const { Task } = firebase
 
 export default {
+    components: {
+    },
+    props: ['loading'],
     data () {
         return {
             newTask: {
@@ -86,17 +89,20 @@ export default {
             this.newTask.status = event.target.value
         },
         createTask() {
+            this.backToTasks()
+
             Task.add({
                 title: this.newTask.title,
                 description: this.newTask.description,
                 status: this.newTask.status
             })
                 .then(docRef => {
-                    console.log(docRef.id);
-                    this.backToTasks()
+                    console.log(docRef.id)
+                    this.$toast.open('Great, you success create one')
                 })
                 .catch(err => {
-                    console.log(err);
+                    console.log(err)
+                    this.$toast.error('Ops!, your action is failed')
                 })
         }
     }

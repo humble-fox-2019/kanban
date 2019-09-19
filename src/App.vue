@@ -11,11 +11,14 @@
                     @getDetail="getDetail"/>
             </div>
         </div>
+        <loader v-if="loading"></loader>
         <detail 
+            :loading="loading"
             v-if="detailTask"
             :selectedTask="selectedTask"
             @backToTasks="backToTasks"/>
         <addTask
+            :loading="loading"
             v-if="addTask"
             @backToTasks="backToTasks"/>
         <pagefooter />
@@ -28,6 +31,7 @@ import detail from '@/components/Detail.vue'
 import addTask from '@/components/AddTask.vue'
 import pagefooter from '@/components/PageFooter.vue'
 import navbar from '@/components/Navbar.vue'
+import loader from '@/components/Loader.vue'
 
 export default {
     components: {
@@ -35,7 +39,8 @@ export default {
         detail,
         addTask,
         pagefooter,
-        navbar
+        navbar,
+        loader
     },
     data() {
         return {
@@ -47,7 +52,8 @@ export default {
             ],
             detailTask: false,
             selectedTask: {},
-            addTask: false
+            addTask: false,
+            loading: false
         }
     },
     methods: {
@@ -58,6 +64,7 @@ export default {
         backToTasks() {
             this.detailTask = false
             this.addTask = false
+            this.loading = false
         },
         newTask() {
             this.addTask = true
