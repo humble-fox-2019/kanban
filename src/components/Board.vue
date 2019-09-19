@@ -52,60 +52,59 @@
 </template>
 
 <script>
-import Card from "@/components/Card.vue";
-import db from "@/apis/firebase";
+import Card from '@/components/Card.vue';
+import db from '@/apis/firebase';
 
 export default {
-  props: ["boardData"],
+  props: ['boardData'],
   data() {
     return {
       valid: true,
       dialog: false,
-      title: "",
-      description: "",
-      point: "",
-      assignedTo: ""
+      title: '',
+      description: '',
+      point: '',
+      assignedTo: '',
     };
   },
   methods: {
     createCard() {
-      
       if (
-        this.title == "" ||
-        this.description == "" ||
-        this.point == "" ||
-        this.assignedTo == ""
+        this.title == ''
+        || this.description == ''
+        || this.point == ''
+        || this.assignedTo == ''
       ) {
-        } else {
-          this.dialog = false;
-          db.collection("cards")
+      } else {
+        this.dialog = false;
+        db.collection('cards')
           .add({
             title: this.title,
             description: this.description,
             point: this.point,
             assignedTo: this.assignedTo,
-            category: this.boardData.name
+            category: this.boardData.name,
           })
-          .then(function() {
+          .then(function () {
             this.clearForm();
-            console.log("Document successfully written!");
+            console.log('Document successfully written!');
           })
-          .catch(function(error) {
+          .catch(function (error) {
             this.clearForm();
-            console.error("Error writing document: ", error);
+            console.error('Error writing document: ', error);
           });
       }
     },
     clearForm() {
-      title = "";
-      description = "";
-      point = "";
-      assignedTo = "";
-    }
+      title = '';
+      description = '';
+      point = '';
+      assignedTo = '';
+    },
   },
   components: {
-    Card
-  }
+    Card,
+  },
 };
 </script>
 

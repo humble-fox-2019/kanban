@@ -3,7 +3,7 @@
     <v-card-text>{{cardData.title}}</v-card-text>
     <v-btn text @click.stop="dialog = true" small><v-icon>mdi-format-align-left</v-icon></v-btn>
     <p></p>
-    
+
     <v-row justify="center">
       <v-dialog v-model="dialog" max-width="600px">
         <v-card>
