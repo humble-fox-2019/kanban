@@ -7,39 +7,24 @@
     <v-card-text>
       <Card v-for="card in boardData.cards" :key="card.id" :card-data="card" />
     </v-card-text>
-
+    
+    <v-btn text block @click.stop="dialog = true">Add new card</v-btn>
+    
     <v-row justify="center">
       <v-dialog v-model="dialog" max-width="600px">
-        <template v-slot:activator="{ on }">
-          <v-btn text v-on="on">Add new card</v-btn>
-        </template>
+
         <v-card>
           <v-card-title>Add {{boardData.name}} Card</v-card-title>
           <v-divider></v-divider>
           <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
-              <v-text-field
-                v-model="title"
-                :counter="60"
-                label="Title"
-                required
-              ></v-text-field>
+              <v-text-field v-model="title" :counter="60" label="Title" required></v-text-field>
 
-              <v-textarea
-                v-model="description"
-                :counter="400"
-                label="Description"
-                required
-              ></v-textarea>
+              <v-textarea v-model="description" :counter="400" label="Description" required></v-textarea>
 
               <v-text-field v-model="point" :counter="2" label="Point" required></v-text-field>
 
-              <v-text-field
-                v-model="assignedTo"
-                :counter="20"
-                label="Assigned To"
-                required
-              ></v-text-field>
+              <v-text-field v-model="assignedTo" :counter="20" label="Assigned To" required></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
@@ -53,18 +38,23 @@
 </template>
 
 <script>
-import Card from '@/components/Card.vue';
+import Card from "@/components/Card.vue";
 
 export default {
-  props: ['boardData'],
+  props: ["boardData"],
   data() {
     return {
+      valid: true,
       dialog: false,
+      title: "",
+      description: "",
+      point:"",
+      assignedTo: ""
     };
   },
   components: {
-    Card,
-  },
+    Card
+  }
 };
 </script>
 
