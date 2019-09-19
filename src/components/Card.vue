@@ -1,15 +1,13 @@
 <template>
   <v-card class="mx-auto mt-2" outlined>
     <v-card-text>{{cardData.title}}</v-card-text>
-
-    <v-card-actions>
-        <v-btn text @click.stop="dialog = true">Detail</v-btn>
-    </v-card-actions>
-
+    <v-btn text @click.stop="dialog = true" small><v-icon>mdi-format-align-left</v-icon></v-btn>
+    <p></p>
+    
     <v-row justify="center">
       <v-dialog v-model="dialog" max-width="600px">
         <v-card>
-          <v-card-title><v-icon>mdi-eye</v-icon> Detail</v-card-title>
+          <v-card-title>Detail</v-card-title>
           <v-divider></v-divider>
           <v-card-text>
 
