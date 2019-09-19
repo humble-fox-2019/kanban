@@ -7,9 +7,9 @@
     <v-card-text>
       <Card v-for="card in boardData.cards" :key="card.id" :card-data="card" />
     </v-card-text>
-    
+
     <v-btn text block @click.stop="dialog = true">Add new card</v-btn>
-    
+
     <v-row justify="center">
       <v-dialog v-model="dialog" max-width="600px">
 
@@ -38,23 +38,23 @@
 </template>
 
 <script>
-import Card from "@/components/Card.vue";
+import Card from '@/components/Card.vue';
 
 export default {
-  props: ["boardData"],
+  props: ['boardData'],
   data() {
     return {
       valid: true,
       dialog: false,
-      title: "",
-      description: "",
-      point:"",
-      assignedTo: ""
+      title: '',
+      description: '',
+      point: '',
+      assignedTo: '',
     };
   },
   components: {
-    Card
-  }
+    Card,
+  },
 };
 </script>
 
