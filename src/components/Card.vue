@@ -7,11 +7,18 @@
     <v-row justify="center">
       <v-dialog v-model="dialog" max-width="600px">
         <v-card>
-          <v-card-title>Detail</v-card-title>
+          <v-card-title>{{cardData.title}}</v-card-title>
           <v-divider></v-divider>
-          <v-card-text>
+          <v-container>
+          <strong>Description</strong>
+            <p>{{cardData.description}}</p>
 
-          </v-card-text>
+            <strong>Point</strong>
+            <p>{{cardData.point}}</p>
+
+            <strong>Assigned To</strong>
+            <p>{{cardData.assignedTo}}</p>
+          </v-container>
           <v-card-actions>
             <v-btn color="error" text @click="dialog = false">Close</v-btn>
             <v-btn color="success" text @click="dialog = false">Save</v-btn>
