@@ -1,6 +1,6 @@
 <template>
-    <div style="display: flex; ">
-      <div v-for="category in categories" :key="category.name" class="card" style="width: 19rem;">
+    <div class="d-flex">
+      <div v-for="category in categories" :key="category.name" class="card mx-2" style="width: 19rem;">
         <div class="card-header" >
             {{ category.title }}
         </div>
@@ -16,6 +16,7 @@
 <script>
 import Task from './Task'
 import draggable from 'vuedraggable'
+import Swal from 'sweetalert2'
 import db from '../apis/firebase'
 const tasksCollection = db.collection('tasks')
 
@@ -72,9 +73,11 @@ export default {
     }
   },
   created() {
+    Swal.showLoading()
     tasksCollection.onSnapshot((querySnapshot) => {
       this.categories.forEach(category => {
         category.tasks = [];
+        Swal.close()
       })
       console.log('changes', querySnapshot)
         // let listCategories = this.categories

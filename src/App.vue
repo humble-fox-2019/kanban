@@ -3,97 +3,12 @@
     <Navbar style="margin-bottom: 20px;"></Navbar>
     
     <div>
-      <div class="mt-3">
-        Submitted Names:
-        <div v-if="submittedNames.length === 0">--</div>
-        <ul v-else class="mb-0 pl-3">
-          <li v-for="(name, i) in submittedNames" :key="i">{{ name }}</li>
-        </ul>
-      </div>
-
-      <b-modal
-        id="modal-prevent-closing"
-        ref="modal"
-        title="Add new task"
-        @show="resetModal"
-        @hidden="resetModal"
-        @ok="handleOk"
-      >
-        <form ref="form" @submit.stop.prevent="handleSubmit">
-          <b-form-group
-            :state="titleState"
-            label="Title"
-            label-for="title-input"
-            invalid-feedback="Title is required"
-          >
-            <b-form-input
-              id="title-input"
-              v-model="task.title"
-              :state="nameState"
-              required
-            ></b-form-input>
-          </b-form-group>
-          <b-form-group
-            :state="nameState"
-            label="Name"
-            label-for="name-input"
-            invalid-feedback="Name is required"
-          >
-            <b-form-input
-              id="name-input"
-              v-model="name"
-              :state="nameState"
-              required
-            ></b-form-input>
-          </b-form-group>
-          <b-form-group
-            :state="nameState"
-            label="Name"
-            label-for="name-input"
-            invalid-feedback="Name is required"
-          >
-            <b-form-input
-              id="name-input"
-              v-model="name"
-              :state="nameState"
-              required
-            ></b-form-input>
-          </b-form-group>
-          <b-form-group
-            :state="nameState"
-            label="Name"
-            label-for="name-input"
-            invalid-feedback="Name is required"
-          >
-            <b-form-input
-              id="name-input"
-              v-model="name"
-              :state="nameState"
-              required
-            ></b-form-input>
-          </b-form-group>
-          <b-form-group
-            :state="nameState"
-            label="Name"
-            label-for="name-input"
-            invalid-feedback="Name is required"
-          >
-            <b-form-input
-              id="name-input"
-              v-model="name"
-              :state="nameState"
-              required
-            ></b-form-input>
-          </b-form-group>
-        </form>
-      </b-modal>
+      <Modal></Modal>
     </div>
 
-    <div class="container-fluid">
-      <div class="row">
+    <div class="container-fluid d-flex justify-content-center">
         <Category>
         </Category>
-      </div>
     </div>
   </div>
 </template>
@@ -138,8 +53,11 @@ export default {
         return valid
     },
     resetModal() {
-      this.name = ''
-      this.nameState = null
+        this.task.title = '',
+        this.task.description = '',
+        this.task.point = '',
+        this.task.assigned_to = '',
+        this.task.status = ''
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
@@ -152,8 +70,15 @@ export default {
       if (!this.checkFormValidity()) {
         return
       }
-      // Push the name to submitted names
-      this.submittedNames.push(this.name)
+      // Push the task to firebase
+      tasks.add(this.task)
+          .then(docRef => {
+            console.log('Task added with id', docRef.id)
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      
       // Hide the modal manually
       this.$nextTick(() => {
         this.$refs.modal.hide()
@@ -177,4 +102,5 @@ Navbar {
   position: fixed-top;
   margin-bottom: 20px;
 }
+
 </style>
