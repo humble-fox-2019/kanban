@@ -9,12 +9,14 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable';
 import Board from '@/components/Board.vue';
 import db from '@/apis/firebase';
 
 export default {
   components: {
     Board,
+    draggable,
   },
   data() {
     return {
@@ -43,7 +45,7 @@ export default {
   created() {
     db.collection('cards').onSnapshot((snapshot) => {
       const tmpBoard = this.boards;
-      
+
       tmpBoard.forEach((el) => {
         el.cards = [];
       });

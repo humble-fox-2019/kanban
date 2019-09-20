@@ -5,7 +5,16 @@
     </v-toolbar>
 
     <v-card-text>
-      <Card v-for="card in boardData.cards" :key="card.id" :card-data="card" />
+      <draggable
+        class="dragArea list-group"
+        :list="boardData.cards.id"
+        :group="{name: 'card'}"
+        v-model="boardData.cards"
+        :sortable="false"
+        @change="myEvent"
+      >
+        <Card v-for="card in boardData.cards" :key="card.id" :card-data="card" />
+      </draggable>
     </v-card-text>
 
     <v-btn text block @click.stop="dialog = true">Add new card</v-btn>
@@ -17,28 +26,13 @@
           <v-divider></v-divider>
           <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
-              <v-text-field
-                v-model="title"
-                :counter="60"
-                label="Title"
-                required
-              ></v-text-field>
+              <v-text-field v-model="title" :counter="60" label="Title" required></v-text-field>
 
-              <v-textarea
-                v-model="description"
-                :counter="400"
-                label="Description"
-                required
-              ></v-textarea>
+              <v-textarea v-model="description" :counter="400" label="Description" required></v-textarea>
 
               <v-text-field v-model="point" :counter="2" label="Point" required></v-text-field>
 
-              <v-text-field
-                v-model="assignedTo"
-                :counter="20"
-                label="Assigned To"
-                required
-              ></v-text-field>
+              <v-text-field v-model="assignedTo" :counter="20" label="Assigned To" required></v-text-field>
             </v-form>
           </v-card-text>
           <v-card-actions>
@@ -52,8 +46,10 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable';
 import Card from '@/components/Card.vue';
 import db from '@/apis/firebase';
+import swal from "sweetalert";
 
 export default {
   props: ['boardData'],
@@ -75,6 +71,7 @@ export default {
         || this.point == ''
         || this.assignedTo == ''
       ) {
+        swal("Oops!", "All field is required!", "error");
       } else {
         this.dialog = false;
         db.collection('cards')
@@ -101,9 +98,24 @@ export default {
       point = '';
       assignedTo = '';
     },
+    myEvent(evt) {
+      console.log({ evt });
+      const { added, removed, moved } = evt;
+      const id = added
+        ? added.element.id
+        : removed
+          ? removed.element.id
+          : moved.element.id;
+      if (added) {
+        db.collection('cards')
+          .doc(id)
+          .update({ category: this.boardData.name });
+      }
+    },
   },
   components: {
     Card,
+    draggable,
   },
 };
 </script>

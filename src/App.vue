@@ -6,10 +6,6 @@
         <span class="font-weight-light">Tive</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text>
-        <v-icon left>mdi-file-plus</v-icon>
-        <span class="mr-2">Add new task</span>
-      </v-btn>
     </v-app-bar>
 
     <v-content>
