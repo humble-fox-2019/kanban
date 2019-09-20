@@ -47,9 +47,9 @@
 
 <script>
 import draggable from 'vuedraggable';
+import swal from 'sweetalert';
 import Card from '@/components/Card.vue';
 import db from '@/apis/firebase';
-import swal from "sweetalert";
 
 export default {
   props: ['boardData'],
@@ -71,7 +71,7 @@ export default {
         || this.point == ''
         || this.assignedTo == ''
       ) {
-        swal("Oops!", "All field is required!", "error");
+        swal('Oops!', 'All field is required!', 'error');
       } else {
         this.dialog = false;
         db.collection('cards')

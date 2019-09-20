@@ -35,7 +35,7 @@
 
 <script>
 import draggable from 'vuedraggable';
-import swal from "sweetalert";
+import swal from 'sweetalert';
 import db from '@/apis/firebase';
 
 export default {
@@ -53,36 +53,36 @@ export default {
   methods: {
     deleteCard(id) {
       swal({
-        title: "Are you sure, remove the card?",
+        title: 'Are you sure, remove the card?',
         text:
-          "Once removed, You cannot restor this card!",
-        icon: "warning",
+          'Once removed, You cannot restor this card!',
+        icon: 'warning',
         buttons: true,
-        dangerMode: true
+        dangerMode: true,
       })
-        .then(willDelete => {
+        .then((willDelete) => {
           if (willDelete) {
             return db
-              .collection("cards")
+              .collection('cards')
               .doc(id)
               .delete();
           }
           return null;
         })
-        .then(data => {
+        .then((data) => {
           if (data !== null) {
-            swal("Poof! Your todo has been deleted!", {
-              icon: "success"
+            swal('Poof! Your todo has been deleted!', {
+              icon: 'success',
             });
           } else {
-            swal("Deletion canceled!");
+            swal('Deletion canceled!');
           }
         })
-        .catch(error => {
-          console.log("Error deleting file:", error);
+        .catch((error) => {
+          console.log('Error deleting file:', error);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
