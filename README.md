@@ -1,5 +1,8 @@
 # kanban
 
+## Deploy
+https://kanbantive.firebaseapp.com/
+
 ## Project setup
 ```
 npm install
