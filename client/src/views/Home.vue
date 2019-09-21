@@ -1,8 +1,10 @@
 <template>
   <div>
     <Navbar />
+
     <b-container fluid>
       <b-row class="justify-content-center">
+        <h4>Please drag and drop box to move the task around</h4>
         <div id="kanbanBlanket" class="row bg-light justify-content-center w-100">
           <b-col sm="6" md="3">
             <div id="backlogBlanket" class="ml-1 mt-1">
