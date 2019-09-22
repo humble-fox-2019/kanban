@@ -74,7 +74,7 @@
             invalid-feedback="Status to is required"
           >
             <b-form-select v-model="task.status" class="mb-3">
-              <option value="backlog">Back Log</option>
+              <option value="backlog" selected>Back Log</option>
               <option value="todo">To Do</option>
               <option value="doing">Doing</option>
               <option value="done">Done</option>
@@ -91,7 +91,7 @@ const tasks = db.collection('tasks')
 
 export default {
   name: 'Modal',
-  data() {
+  data () {
     return {
       name: '',
       states: {
@@ -112,39 +112,37 @@ export default {
     }
   },
   methods: {
-    checkFormValidity() {
-        const valid = this.$refs.form.checkValidity()
-        this.nameState = valid ? 'valid' : 'invalid'
-        return valid
+    checkFormValidity () {
+      const valid = this.$refs.form.checkValidity()
+      this.nameState = valid ? 'valid' : 'invalid'
+      return valid
     },
-    resetModal() {
-        this.task.title = '',
-        this.task.description = '',
-        this.task.point = '',
-        this.task.assigned_to = '',
-        this.task.status = ''
+    resetModal () {
+      this.task.title = ''
+      this.task.description = ''
+      this.task.point = ''
+      this.task.assigned_to = ''
+      this.task.status = 'backlog'
     },
-    handleOk(bvModalEvt) {
+    handleOk (bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault()
       // Trigger submit handler
       this.handleSubmit()
     },
-    handleSubmit() {
+    handleSubmit () {
       // Exit when the form isn't valid
       if (!this.checkFormValidity()) {
         return
       }
       // Push the task to firebase
       tasks.add(this.task)
-          .then(docRef => {
-            console.log('Task added with id', docRef.id)
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      
-      // Hide the modal manually
+        .then(docRef => {
+          console.log('Task added with id', docRef.id)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       this.$nextTick(() => {
         this.$refs.modal.hide()
       })
@@ -152,7 +150,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
