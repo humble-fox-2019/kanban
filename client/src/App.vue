@@ -11,17 +11,44 @@
       </div>
     </nav>
     <div class="row">
-      <div class="col" v-for="(title, index) in titles" :key="index">
-        <div class="title" :class="title.color">
-          <h3>{{title.name}}</h3>
+      <div class="col">
+        <div class="title yellow">
+          <h3>TODO</h3>
         </div>
-        <draggable class="list-group" :list="title.list" group="people" @change="log">
-          <div
-            class="list-group-item"
-            :class="title.color"
-            v-for="(element) in list1"
-            :key="element.name"
-          >
+        <draggable class="list-group" :list="list1" group="people" @change="log">
+          <div class="list-group-item yellow" v-for="(element) in list1" :key="element.name">
+            {{ element.todo }}
+            <hr />
+            <p>{{ element.description }}</p>
+            <a href="#" @click.prevent="remove(element.id)">
+              <i class="far fa-trash-alt"></i>
+            </a>
+          </div>
+        </draggable>
+      </div>
+
+      <div class="col">
+        <div class="title blue">
+          <h3>ON PROGRESS</h3>
+        </div>
+        <draggable class="list-group" :list="list2" group="people" @change="log">
+          <div class="list-group-item blue" v-for="(element) in list2" :key="element.name">
+            {{ element.todo }}
+            <hr />
+            <p>{{ element.description }}</p>
+            <a href="#" @click.prevent="remove(element.id)">
+              <i class="far fa-trash-alt"></i>
+            </a>
+          </div>
+        </draggable>
+      </div>
+
+      <div class="col">
+        <div class="title green">
+          <h3>DONE</h3>
+        </div>
+        <draggable class="list-group" :list="list3" group="people" @change="log">
+          <div class="list-group-item green" v-for="(element) in list3" :key="element.name">
             {{ element.todo }}
             <hr />
             <p>{{ element.description }}</p>
