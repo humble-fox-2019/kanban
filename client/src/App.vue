@@ -1,14 +1,8 @@
 <template>
   <div>
     <nav>
-      <div class="new-task">
-        <h4>
-          <a href="#">NEW TASK</a>
-        </h4>
-      </div>
       <h2 style="color: #33363d">TamvanKanban</h2>
-      <i class="far fa-trash-alt"></i>
-      <div class="form" v-if="showForm">
+      <div class="form">
         <form @submit.prevent="addTask">
           <input type="text" placeholder="todo" v-model="todo" />
           <input type="text" placeholder="description" v-model="description" />
@@ -17,41 +11,23 @@
       </div>
     </nav>
     <div class="row">
-      <div class="col">
-        <div class="title yellow">
-          <h3>TODO</h3>
+      <div class="col" v-for="(title, index) in titles" :key="index">
+        <div class="title" :class="title.color">
+          <h3>{{title.name}}</h3>
         </div>
-        <draggable class="list-group" :list="list1" group="people" @change="log">
-          <div class="list-group-item yellow" v-for="(element) in list1" :key="element.name">
+        <draggable class="list-group" :list="title.list" group="people" @change="log">
+          <div
+            class="list-group-item"
+            :class="title.color"
+            v-for="(element) in list1"
+            :key="element.name"
+          >
             {{ element.todo }}
             <hr />
             <p>{{ element.description }}</p>
-          </div>
-        </draggable>
-      </div>
-
-      <div class="col">
-        <div class="title blue">
-          <h3>ON PROGRESS</h3>
-        </div>
-        <draggable class="list-group" :list="list2" group="people" @change="log">
-          <div class="list-group-item blue" v-for="(element) in list2" :key="element.name">
-            {{ element.todo }}
-            <hr />
-            <p>{{ element.description }}</p>
-          </div>
-        </draggable>
-      </div>
-
-      <div class="col">
-        <div class="title green">
-          <h3>DONE</h3>
-        </div>
-        <draggable class="list-group" :list="list3" group="people" @change="log">
-          <div class="list-group-item green" v-for="(element) in list3" :key="element.name">
-            {{ element.todo }}
-            <hr />
-            <p>{{ element.description }}</p>
+            <a href="#" @click.prevent="remove(element.id)">
+              <i class="far fa-trash-alt"></i>
+            </a>
           </div>
         </draggable>
       </div>
@@ -76,7 +52,11 @@ export default {
       list1: [],
       list2: [],
       list3: [],
-      showForm: false
+      titles: [
+        { name: "TODO", list: this.list1, color: "yellow" },
+        { name: "ON PROGRESS", list: this.list2, color: "blue" },
+        { name: "DONE", list: this.list3, color: "green" }
+      ]
     };
   },
   methods: {
@@ -92,10 +72,21 @@ export default {
         })
         .then(function(docRef) {
           console.log("Document written with ID: ", docRef.id);
+          this.todo = "";
+          this.description = "";
         })
         .catch(function(error) {
           console.error("Error adding document: ", error);
+          this.todo = "";
+          this.description = "";
         });
+    },
+    remove(id) {
+      db.collection("todos")
+        .doc(id)
+        .delete()
+        .then(console.log)
+        .catch(console.log);
     }
   },
   watch: {
@@ -185,6 +176,17 @@ export default {
   font-family: "Lato", sans-serif;
 }
 
+input {
+  height: 30px;
+  padding: 5px;
+}
+
+input[type="submit"] {
+  background-color: black;
+  border: none;
+  color: white;
+}
+
 .new-task {
   background-color: black;
   height: 30px;
@@ -265,5 +267,9 @@ nav a {
   flex-direction: column;
   justify-content: space-around;
   padding: 5px;
+}
+
+a {
+  color: #33363d;
 }
 </style>
