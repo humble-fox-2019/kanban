@@ -1,0 +1,57 @@
+{
+  "back-logs": [
+    {
+      "id": 2,
+      "title": "Buka dulu topengmu",
+      "assignee": "Aril",
+      "point": 300,
+      "description": "An energetic song",
+      "status": "backLog"
+    }
+  ],
+  "to-dos": [
+    {
+      "title": "SLAM",
+      "assignee": "Abdi",
+      "point": 200,
+      "description": "A nice song",
+      "status": "toDo",
+      "id": 1
+    },
+    {
+      "title": "Ada hantu di sekolah",
+      "assignee": "Heri",
+      "point": 300,
+      "description": "Acara menakutkan",
+      "status": "toDo",
+      "id": 2
+    }
+  ],
+  "on-progress": [],
+  "finished": [
+    {
+      "title": "Robocop",
+      "assignee": "Arnie",
+      "point": 300,
+      "description": "Acara seru",
+      "status": "finished",
+      "id": 1
+    },
+    {
+      "title": "Ada hantu di sekolah",
+      "assignee": "Heri",
+      "point": 300,
+      "description": "Acara menakutkan",
+      "status": "finished",
+      "id": 2
+    },
+    {
+      "title": "runtuhnya surau kami",
+      "assignee": "son of sam",
+      "point": "200",
+      "description": "kisah sedih",
+      "status": "finished",
+      "id": 3
+    }
+  ]
+}
