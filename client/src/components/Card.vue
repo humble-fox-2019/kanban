@@ -1,13 +1,11 @@
 <template>
     <div class="m-3">
         <div class="title">
-            <h3>Title</h3>
-            <div>{{ task.title }}</div>
+            <div class="title">{{ task.title }}</div>
         </div>
         <br>
         <div class="desc">
-            <h3>Description</h3>
-            <div>{{ task.description }}</div>
+            <div class="description">{{ task.description }}</div>
         </div>
         
         <div >
@@ -124,5 +122,12 @@ export default {
     }
     button:hover {
         background-color:coral;
+    }
+    .title {
+        font-size: 40px;
+        font-weight: bolder;
+    }
+    .description {
+        font-size: 15px;
     }
 </style>

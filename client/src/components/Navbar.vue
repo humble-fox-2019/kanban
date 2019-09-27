@@ -73,7 +73,8 @@ export default {
         background-color: orange;
         overflow: hidden;
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
+        padding: 10px;
     }
 
     .topnav a {
